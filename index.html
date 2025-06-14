@@ -1,0 +1,751 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Happy 16th Monthsary</title>
+
+  <style>
+  /*
+   * CSS Styling for the Digital Time Capsule Website
+   * Using a clean, modern aesthetic with a touch of warmth.
+   */
+
+  :root {
+    --primary-color: #A0C4FF;
+    --secondary-color: #BDB2FF;
+    --accent-color: #FFC6FF;
+    --text-color: #333;
+    --background-color: #F8F9FA;
+    --card-background: #FFFFFF;
+    --border-radius: 10px;
+    --shadow-light: 0 4px 8px rgba(0, 0, 0, 0.1);
+    --shadow-medium: 0 8px 16px rgba(0, 0, 0, 0.15);
+  }
+
+  body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: var(--background-color);
+    color: var(--text-color);
+    line-height: 1.6;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-height: 100vh;
+  }
+
+  header {
+    background-color: var(--primary-color);
+    color: white;
+    padding: 2.5em 0;
+    text-align: center;
+    width: 100%;
+    box-shadow: var(--shadow-medium);
+    margin-bottom: 2em;
+  }
+
+  header h1 {
+    margin: 0;
+    font-size: 2.8em;
+    letter-spacing: 1px;
+    text-shadow: 1px 1px 2px rgba(0,0,0,0.2);
+  }
+
+  header p {
+    font-size: 1.2em;
+    margin-top: 0.5em;
+  }
+
+  .countdown-container {
+    margin-top: 1.5em;
+    background-color: rgba(255, 255, 255, 0.2);
+    padding: 10px 20px;
+    border-radius: var(--border-radius);
+    font-size: 1.1em;
+    font-weight: bold;
+    color: white;
+  }
+
+  .container {
+    width: 90%;
+    max-width: 1000px;
+    margin: 0 auto 3em auto;
+    display: grid;
+    gap: 2.5em;
+    grid-template-columns: 1fr;
+    padding: 0 1em;
+  }
+
+  @media (min-width: 768px) {
+    .container {
+      grid-template-columns: 1fr 1fr;
+      padding: 0;
+      gap: 2.5em;
+    }
+  }
+
+  .card {
+    background-color: var(--card-background);
+    border-radius: var(--border-radius);
+    box-shadow: var(--shadow-light);
+    padding: 1.5em;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .card:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--shadow-medium);
+  }
+
+  h2 {
+    color: var(--primary-color);
+    text-align: center;
+    margin-bottom: 1.5em;
+    font-size: 2em;
+    position: relative;
+  }
+
+  h2::after {
+    content: '';
+    width: 50px;
+    height: 3px;
+    background-color: var(--accent-color);
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    bottom: -10px;
+    border-radius: 5px;
+  }
+
+  .time-capsule-door {
+    background-color: var(--secondary-color);
+    color: white;
+    padding: 1.5em;
+    border-radius: var(--border-radius);
+    text-align: center;
+    cursor: pointer;
+    font-size: 1.3em;
+    font-weight: bold;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+    margin-bottom: 1.5em;
+    box-shadow: var(--shadow-light);
+  }
+
+  .time-capsule-door:hover:not(.locked) {
+    background-color: #9D8FEF;
+    transform: translateY(-3px);
+  }
+
+  .time-capsule-door.locked {
+    background-color: #cccccc;
+    cursor: not-allowed;
+    opacity: 0.7;
+  }
+
+  .capsule-content {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.7s ease-out, opacity 0.7s ease-out;
+    opacity: 0;
+  }
+
+  .capsule-content.open {
+    max-height: 1000px;
+    opacity: 1;
+  }
+
+  .memory-item {
+    display: flex;
+    align-items: center;
+    margin-bottom: 1.5em;
+    background-color: var(--background-color);
+    border-radius: var(--border-radius);
+    padding: 1em;
+    box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.05);
+  }
+
+  .memory-item img {
+    width: 100px;
+    height: 100px;
+    border-radius: 8px;
+    object-fit: cover;
+    margin-right: 1em;
+    border: 2px solid var(--accent-color);
+  }
+
+  .memory-item .text-content {
+    flex-grow: 1;
+  }
+
+  .memory-item h3 {
+    color: var(--primary-color);
+    margin: 0 0 0.3em;
+    font-size: 1.2em;
+  }
+
+  .memory-item p {
+    font-size: 0.9em;
+    color: #555;
+    margin-bottom: 0.5em;
+  }
+
+  .audio-player {
+    width: 100%;
+    margin-top: 0.5em;
+  }
+
+  textarea {
+    width: calc(100% - 20px);
+    min-height: 150px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: var(--border-radius);
+    font-family: inherit;
+    font-size: 1em;
+    resize: vertical;
+    margin-bottom: 1em;
+  }
+
+  textarea:focus {
+    outline: none;
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 3px rgba(160, 196, 255, 0.3);
+  }
+
+  .instructions {
+    font-size: 0.9em;
+    color: #666;
+    text-align: center;
+    margin-top: 1em;
+    padding: 0 1em;
+  }
+
+  .cta-button {
+    display: block;
+    width: fit-content;
+    margin: 1.5em auto 0;
+    padding: 0.8em 1.5em;
+    background-color: var(--primary-color);
+    color: white;
+    text-decoration: none;
+    border-radius: var(--border-radius);
+    font-weight: bold;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    border: none;
+    cursor: pointer;
+    font-size: 1em;
+  }
+
+  .cta-button:hover {
+    background-color: #84A7E0;
+    transform: translateY(-2px);
+  }
+
+  .message-box {
+    background-color: #d4edda;
+    color: #155724;
+    border: 1px solid #c3e6cb;
+    border-radius: var(--border-radius);
+    padding: 10px 15px;
+    text-align: center;
+    margin-top: 1em;
+    font-size: 0.95em;
+    opacity: 0;
+    transition: opacity 0.5s ease-in-out;
+  }
+
+  .message-box.show {
+    opacity: 1;
+  }
+
+  .wishes-display-area {
+    margin-top: 2em;
+    padding: 1.5em;
+    background-color: var(--background-color);
+    border: 1px dashed var(--accent-color);
+    border-radius: var(--border-radius);
+    min-height: 50px;
+    font-style: italic;
+    color: #555;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+    max-height: 300px;
+    overflow-y: auto;
+    box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.05);
+  }
+
+  .wishes-display-area p.no-wishes-yet {
+    text-align: center;
+    color: #999;
+    font-size: 0.9em;
+    font-style: normal;
+    margin: 0;
+  }
+
+  .wish-entry {
+    background-color: var(--card-background);
+    padding: 1em 1.5em;
+    border-radius: var(--border-radius);
+    margin-bottom: 1em;
+    box-shadow: var(--shadow-light);
+    border-left: 5px solid var(--primary-color);
+  }
+
+  .wish-entry:last-child {
+    margin-bottom: 0;
+  }
+
+  .wish-entry .date {
+    font-size: 0.8em;
+    color: #777;
+    margin-bottom: 0.5em;
+    display: block;
+  }
+
+  .wish-entry .content {
+    font-size: 1em;
+    color: var(--text-color);
+    line-height: 1.5;
+    white-space: pre-wrap;
+  }
+
+  footer {
+    margin-top: 3em;
+    padding: 1.5em;
+    text-align: center;
+    color: #777;
+    font-size: 0.9em;
+    width: 100%;
+    background-color: var(--background-color);
+  }
+
+  /* ——— MODIFIED AREA START ——— */
+  .modal {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    z-index: 1000;
+  }
+
+  .modal:not(.hidden) {
+    pointer-events: auto;
+    opacity: 1;
+  }
+
+  .modal-backdrop {
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background-color: rgba(0,0,0,0.5);
+  }
+
+  .modal-content {
+    background: var(--card-background);
+    border-radius: var(--border-radius);
+    box-shadow: var(--shadow-medium);
+    width: 90%;
+    max-width: 700px; /* changed from 500px */
+    margin: 5% auto;
+    padding: 1.5em;
+    position: relative;
+    z-index: 1001;
+    max-height: 90vh;     /* added */
+    overflow-y: auto;     /* added */
+  }
+
+  .modal-close {
+    position: absolute;
+    top: 0.5em; right: 0.7em;
+    background: none; border: none;
+    font-size: 1.5em; cursor: pointer;
+  }
+
+  .modal-body {
+    max-height: 60vh;       /* added */
+    overflow-y: auto;       /* added */
+    padding-right: 10px;    /* scrollbar space */
+  }
+
+  .modal-body p {
+    white-space: pre-wrap;
+    line-height: 1.5;
+    margin-bottom: 1.5em;
+  }
+  /* ——— MODIFIED AREA END ——— */
+
+  @media (max-width: 767px) {
+    .container {
+      grid-template-columns: 1fr;
+      gap: 1.5em;
+    }
+    header h1 { font-size: 1.8em; }
+    header p  { font-size: 1em; }
+  }
+
+  @media (max-width: 480px) {
+    .cta-button,
+    .view-btn {
+      width: 100%;
+      box-sizing: border-box;
+      font-size: 1em;
+    }
+  }
+.zoomable-image {
+  cursor: zoom-in;
+  transition: transform 0.3s ease;
+}
+
+.image-modal {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: fixed;
+  z-index: 9999;
+  left: 0; top: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0,0,0,0.9);
+}
+
+.image-modal.hidden {
+  display: none;
+}
+
+.image-modal img {
+  max-width: 90%;
+  max-height: 90%;
+  border-radius: 10px;
+  box-shadow: 0 0 20px rgba(0,0,0,0.5);
+}
+
+.image-close {
+  position: absolute;
+  top: 20px;
+  right: 30px;
+  color: white;
+  font-size: 40px;
+  font-weight: bold;
+  cursor: pointer;
+}
+.memory-item .text-content p {
+  text-align: justify;
+}
+.capsule-content {
+  height: 100vh;              /* or a fixed height like 500px */
+  overflow-y: auto;
+  padding-right: 1rem;        /* to avoid content touching scrollbar */
+}
+
+</style>
+
+</head>
+<body>
+
+    <header>
+        <h1>Happy 16th Monthsary</h1>
+        <p>16 Months of LDR Love - A Look Back and A Look Forward</p>
+        <div class="countdown-container">
+            <span id="countdown">Loading countdown...</span>
+        </div>
+    </header>
+
+    <main class="container">
+        <!-- Time Capsule Section -->
+        <section class="card time-capsule-card">
+            <h2><span role="img" aria-label="time capsule">⏳</span> Past Treasures</h2>
+            <div class="time-capsule-door" id="openCapsuleBtn">
+                Click to Open Our Time Capsule!
+            </div>
+            <div class="capsule-content" id="capsuleContent">
+                <!-- Memory Item 1 -->
+                <div class="memory-item">
+                    <img src="1st.jpg" alt="First chat screenshot" class="zoomable-image">
+                    <div class="text-content">
+                        <h3>PASS DAW😛</h3>
+                        <p>Remember this night? dadeh💸 HAHAHAHA.
+                            Wala nga lang yung message ko dahil deleted acc na, pero ito yung unang nag fm ako sayo kasi pinilit ni laby HAHAHAHA.
+                            I always say PASS kay Laby non kasi di pa raw ready KUNO sa commitment, pero sabi naman ni Laby chat chat lang.
+                            Syempre ito naman ako, umoo na lang para di na mangulit.
+                            Pero look at us now, nag karoon man ng hiwalayan but still nag patuloy pa rin.
+                            Pano kaya kung nag insist ako na mag PASS lang sayo non? wala siguro akong Maganda at Sexy na asawa ngayon.
+                            From PASS to LAST, LAST na ka RS, LAST na ka bebetime, LAST na tatawaging Asawa ko.
+
+
+                        </p>
+                        <p><em>Date: February 16, 2024</em></p>
+                    </div>
+                </div>
+
+                <!-- Memory Item 2 -->
+                <div class="memory-item">
+                    <img src="2nd.jpg" alt="Virtual date screenshot" class="zoomable-image">
+                    <div class="text-content">
+                        <h3>Our First Virtual Date</h3>
+                        <p>Even though we were miles apart, that movie night felt so real. Your laugh made my evening.</p>
+                        <p><em>Date: March 15, 2024</em></p>
+                    </div>
+                </div>
+
+                <!-- Memory Item 3 (with audio) -->
+                <div class="memory-item">
+                    <img src="3rd.jpg" alt="Voice message icon" class="zoomable-image">
+                    <div class="text-content">
+                        <h3>A Message From Me to You</h3>
+                        <p>Just a little something I wanted you to hear whenever you open this. Click play!</p>
+                        <audio controls class="audio-player">
+                            <source src="placeholder_my_voice_message.mp3" type="audio/mpeg">
+                            Your browser does not support the audio element.
+                        </audio>
+                        <p><em>Date: June 14, 2025</em></p>
+                    </div>
+                </div>
+
+                <!-- Add more memory items as needed -->
+                <div class="memory-item">
+                    <img src="4th.jpg" alt="Inside joke image" class="zoomable-image">
+                    <div class="text-content">
+                        <h3>That Inside Joke</h3>
+                        <p>Only we know what this means, and it still makes me smile every time I think of it.</p>
+                        <p><em>Date: April 2, 2024</em></p>
+                    </div>
+                </div>
+
+                <p style="text-align: center; font-style: italic; color: #777;">
+                    More memories to come as our story unfolds...
+                </p>
+            </div>
+        </section>
+
+        <!-- Future Wishes Section -->
+        <section class="card future-wishes-card">
+            <h2><span role="img" aria-label="star">✨</span> Future Wishes</h2>
+            <p style="text-align: center; margin-bottom: 1.5em;">
+                What are your dreams for us baba? Write down your hopes, plans, or simply anything you're looking forward to!
+            </p>
+            <textarea id="futureWishesText" placeholder="Type your beautiful wishes here..."></textarea>
+            <div class="instructions">
+                Type your wish above and click "Seal My Wishes" to add it to the collection of wishes below!
+            </div>
+            <a href="#" class="cta-button" id="sealWishesBtn">Seal My Wishes</a>
+            <div id="messageBox" class="message-box">
+                Your wish has been sealed!
+            </div>
+            <!-- New: Display area for wishes -->
+            <div id="wishesDisplayArea" class="wishes-display-area">
+                <p class="no-wishes-yet">No wishes sealed yet. Start typing above!</p>
+            </div>
+        </section>
+    </main>
+    
+    <footer>
+        <p>&copy; 2025 Our Love Story. Created by your baba.</p>
+    </footer>
+    <!-- Wish Detail Modal -->
+<div id="wishModal" class="modal hidden">
+  <div class="modal-backdrop"></div>
+  <div class="modal-content">
+    <button class="modal-close">&times;</button>
+    <div class="modal-body">
+      <p id="modalWishText"></p>
+    </div>
+    <button id="modalDeleteBtn" class="cta-button">Delete This Wish</button>
+  </div>
+</div>
+
+<!-- Image Zoom Modal -->
+<div id="imageModal" class="image-modal hidden">
+  <span class="image-close">&times;</span>
+  <img class="modal-content" id="modalImage">
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  // ————— Element refs —————
+  const countdownElement = document.getElementById('countdown');
+  const openCapsuleBtn  = document.getElementById('openCapsuleBtn');
+  const capsuleContent   = document.getElementById('capsuleContent');
+  const wishInput        = document.getElementById('futureWishesText');
+  const sealBtn          = document.getElementById('sealWishesBtn');
+  const wishBox          = document.getElementById('messageBox');
+  const displayArea      = document.getElementById('wishesDisplayArea');
+  const modal            = document.getElementById('wishModal');
+  const backdrop         = modal.querySelector('.modal-backdrop');
+  const closeBtn         = modal.querySelector('.modal-close');
+  const modalText        = document.getElementById('modalWishText');
+  const deleteBtn        = document.getElementById('modalDeleteBtn');
+
+  // ————— Countdown —————
+  const monthsaryDate = new Date('June 21, 2025 00:00:00').getTime();// change time for countdown
+  setInterval(() => {
+    const now = Date.now();
+    const dist = monthsaryDate - now;
+    if (dist < 0) {
+      countdownElement.textContent = "Happy 16th Monthsary, Asawa ko!";
+    } else {
+      const d = Math.floor(dist / 86400000);
+      const h = Math.floor((dist % 86400000) / 3600000);
+      const m = Math.floor((dist % 3600000) / 60000);
+      const s = Math.floor((dist % 60000) / 1000);
+      countdownElement.textContent = `${d}d ${h}h ${m}m ${s}s until our 16th Monthsary!`;
+    }
+  }, 1000);
+
+  // ————— Time Capsule Lock —————
+  const unlockDate = new Date('June 21, 2025 00:00:00'); // change to time when it will open
+  function toggleCapsule() {
+    if (!openCapsuleBtn.classList.contains('locked')) {
+      capsuleContent.classList.toggle('open');
+      openCapsuleBtn.textContent = capsuleContent.classList.contains('open')
+        ? 'Our Time Capsule is Open!'
+        : 'Click to Close Our Time Capsule!';
+    }
+  }
+  function checkLock() {
+    if (Date.now() < unlockDate) {
+      openCapsuleBtn.textContent = '🔒 Locked Until Monthsary! 🔒';
+      openCapsuleBtn.classList.add('locked');
+      openCapsuleBtn.removeEventListener('click', toggleCapsule);
+    } else {
+      openCapsuleBtn.textContent = 'Click to Open Our Time Capsule!';
+      openCapsuleBtn.classList.remove('locked');
+      openCapsuleBtn.addEventListener('click', toggleCapsule);
+    }
+  }
+    checkLock();
+    setInterval(checkLock, 60000);
+
+  // ————— Wishes Display —————
+  function displayWishes() {
+    let wishes = JSON.parse(localStorage.getItem('sealedWishes'));
+    if (!Array.isArray(wishes)) wishes = [];
+    displayArea.innerHTML = '';
+
+    if (wishes.length === 0) {
+      displayArea.innerHTML = '<p class="no-wishes-yet">No wishes sealed yet. Start typing above!</p>';
+      return;
+    }
+
+    wishes.forEach((wishObj, idx) => {
+      // Handle both string entries and object entries
+      const text = typeof wishObj === 'string'
+        ? wishObj
+        : (wishObj.text || '');
+      const ts = (wishObj && wishObj.timestamp)
+        ? new Date(wishObj.timestamp).toLocaleString()
+        : '';
+      const preview = text.length > 100
+        ? text.slice(0, 100) + '…'
+        : text;
+
+      const div = document.createElement('div');
+      div.className = 'wish-entry';
+      div.innerHTML = `
+        <span class="date">${ts ? 'Sealed on ' + ts : ''}</span>
+        <p class="content">${preview}</p>
+        <button class="view-btn cta-button" data-idx="${idx}">View</button>
+      `;
+      displayArea.appendChild(div);
+    });
+
+    displayArea.scrollTop = displayArea.scrollHeight;
+  }
+
+  // ————— Seal New Wishes —————
+  sealBtn.addEventListener('click', e => {
+    e.preventDefault();
+    const text = wishInput.value.trim();
+    if (!text) {
+      wishBox.textContent = 'Please write something before sealing!';
+      wishBox.style.backgroundColor = '#f8d7da';
+      wishBox.style.color = '#721c24';
+    } else {
+      const arr = JSON.parse(localStorage.getItem('sealedWishes'));
+      const wishes = Array.isArray(arr) ? arr : [];
+      wishes.push({ text, timestamp: new Date().toISOString() });
+      localStorage.setItem('sealedWishes', JSON.stringify(wishes));
+      wishInput.value = '';
+      wishBox.textContent = 'Your wish has been noted!';
+      wishBox.style.backgroundColor = '#d4edda';
+      wishBox.style.color = '#155724';
+      displayWishes();
+    }
+    wishBox.classList.add('show');
+    setTimeout(() => wishBox.classList.remove('show'), 3000);
+  });
+
+  // ————— Modal Logic —————
+  let currentIdx = null;
+  displayArea.addEventListener('click', e => {
+    if (e.target.matches('.view-btn')) {
+      currentIdx = +e.target.dataset.idx;
+      const arr = JSON.parse(localStorage.getItem('sealedWishes'));
+      const wishText = (Array.isArray(arr) && arr[currentIdx])
+        ? (typeof arr[currentIdx] === 'string' ? arr[currentIdx] : arr[currentIdx].text)
+        : '';
+      modalText.textContent = wishText;
+      modal.classList.remove('hidden');
+    }
+  });
+  [backdrop, closeBtn].forEach(el => el.addEventListener('click', () => {
+    modal.classList.add('hidden');
+    currentIdx = null;
+  }));
+// 3) Delete Wish (with confirmation)
+deleteBtn.addEventListener('click', () => {
+  // Ask the user to confirm
+  const ok = confirm('Are you sure you want to delete this wish?');
+  if (!ok) {
+    return; // user cancelled, do nothing
+  }
+
+  // Proceed with deletion
+  const arr = JSON.parse(localStorage.getItem('sealedWishes')) || [];
+  if (currentIdx !== null && arr[currentIdx]) {
+    arr.splice(currentIdx, 1);
+    localStorage.setItem('sealedWishes', JSON.stringify(arr));
+    displayWishes();
+  }
+
+  // Close the modal
+  modal.classList.add('hidden');
+  currentIdx = null;
+});
+
+
+  // ————— INITIAL POPULATE —————
+  displayWishes();
+});
+// ————— Image Zoom on Click —————
+const imageModal = document.getElementById('imageModal');
+const modalImage = document.getElementById('modalImage');
+const closeImage = document.querySelector('.image-close');
+
+// Automatically add zoom class to all memory-item images
+document.querySelectorAll('.memory-item img').forEach(img => {
+  img.classList.add('zoomable-image');
+  img.addEventListener('click', () => {
+    modalImage.src = img.src;
+    imageModal.classList.remove('hidden');
+  });
+});
+
+// Close the modal
+closeImage.addEventListener('click', () => {
+  imageModal.classList.add('hidden');
+});
+imageModal.addEventListener('click', (e) => {
+  if (e.target === imageModal) {
+    imageModal.classList.add('hidden');
+  }
+});
+
+</script>
+</body>
+</html>
