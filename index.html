@@ -442,6 +442,28 @@
   overflow-y: auto;
   padding-right: 1rem;        /* to avoid content touching scrollbar */
 }
+.cta-button {
+  display: inline-block;   /* or block if you want full-width */
+  text-align: center;
+  padding: 12px 24px;
+  font-size: 1rem;
+  background-color: #ff7f50;  /* or your button color */
+  color: white;
+  border-radius: 8px;
+  text-decoration: none;
+  width: 100%;              /* optional for full-width mobile buttons */
+  max-width: 300px;         /* optional limit */
+  margin: 0 auto;           /* center horizontally */
+  box-sizing: border-box;
+}
+
+@media (max-width: 600px) {
+  .cta-button {
+    width: 90%;
+    text-align: center;
+    margin: 10px auto;
+  }
+}
 
 </style>
 
@@ -598,7 +620,7 @@ document.addEventListener('DOMContentLoaded', () => {
   }, 1000);
 
   // ————— Time Capsule Lock —————
-  const unlockDate = new Date('June 21, 2025 00:00:00'); // change to time when it will open
+  const unlockDate = new Date('June 1, 2025 00:00:00'); // change to time when it will open
   function toggleCapsule() {
     if (!openCapsuleBtn.classList.contains('locked')) {
       capsuleContent.classList.toggle('open');
